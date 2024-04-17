@@ -1,27 +1,40 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using PublisherData;
 using PublisherDomain;
 
-PubContext _context = new(); //existing database
+PubContext _context = new(); // existing database
 
-//InsertNewAuthorWithNewBook();
-InsertBookForExistingAuthor();
+//GetAuthorsWithBooks();
+//GetProjectedAuthors();
 
-void InsertNewAuthorWithNewBook()
+GetBooksForAuthorAlreadyInMemory();
+
+void GetAuthorsWithBooks()
 {
-    var author = new Author { FirstName = "Lynda", LastName = "Rutledge" };
-    author.Books.Add(new Book
+    var authors = _context.Authors.Include(a => a.Books).ToList();
+    authors.ForEach(a =>
     {
-        Title = "West With Giraffes",
-        PublishDate = new DateOnly(2021, 2, 1)
+        Console.WriteLine($"{a.LastName} ({a.Books.Count})");
     });
-    _context.Authors.Add(author);
-    _context.SaveChanges();
 }
 
-void InsertBookForExistingAuthor()
+void GetProjectedAuthors()
 {
-    Book book = new Book { Title = "Book3", PublishDate = new DateOnly(2016, 3, 7), BasePrice = 10, AuthorId = 3 };
-    _context.Books.Add(book);
-    _context.SaveChanges();
+    var authors = _context.Authors.Select(a => new { Name = $"{a.FirstName} {a.LastName}", a.Books }).ToList();
+
+    authors.ForEach(a =>
+    {
+        Console.WriteLine($"{a.Name} ({a.Books.Count})");
+    });
+
+    var debugView = _context.ChangeTracker.DebugView.ShortView;
+}
+
+void GetBooksForAuthorAlreadyInMemory()
+{
+    var author = _context.Authors.FirstOrDefault(a => a.FirstName.StartsWith("R"));
+
+    if (author != null)
+        _context.Entry<Author>(author).Collection(a => a.Books).Load();
 }
