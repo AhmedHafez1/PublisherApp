@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PublisherData;
 
@@ -11,9 +12,11 @@ using PublisherData;
 namespace PublisherData.Migrations
 {
     [DbContext(typeof(PubContext))]
-    partial class PubContextModelSnapshot : ModelSnapshot
+    [Migration("20240418033644_Artist_Cover")]
+    partial class Artist_Cover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,26 +59,6 @@ namespace PublisherData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Artists");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FirstName = "Omar",
-                            LastName = "Ahmad"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FirstName = "Mariam",
-                            LastName = "Ahmad"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FirstName = "Yosuf",
-                            LastName = "Ahmad"
-                        });
                 });
 
             modelBuilder.Entity("PublisherDomain.Author", b =>
@@ -97,6 +80,44 @@ namespace PublisherData.Migrations
                     b.HasKey("AuthorId");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            FirstName = "Rhoda",
+                            LastName = "Lerman"
+                        },
+                        new
+                        {
+                            AuthorId = 2,
+                            FirstName = "Ruth",
+                            LastName = "Ozeki"
+                        },
+                        new
+                        {
+                            AuthorId = 3,
+                            FirstName = "Sofia",
+                            LastName = "Segovia"
+                        },
+                        new
+                        {
+                            AuthorId = 4,
+                            FirstName = "Ursula K.",
+                            LastName = "LeGuin"
+                        },
+                        new
+                        {
+                            AuthorId = 5,
+                            FirstName = "Hugh",
+                            LastName = "Howey"
+                        },
+                        new
+                        {
+                            AuthorId = 6,
+                            FirstName = "Isabelle",
+                            LastName = "Allende"
+                        });
                 });
 
             modelBuilder.Entity("PublisherDomain.Book", b =>
@@ -125,6 +146,32 @@ namespace PublisherData.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            BookId = 1,
+                            AuthorId = 1,
+                            BasePrice = 0m,
+                            PublishDate = new DateOnly(1989, 3, 1),
+                            Title = "In God's Ear"
+                        },
+                        new
+                        {
+                            BookId = 2,
+                            AuthorId = 2,
+                            BasePrice = 0m,
+                            PublishDate = new DateOnly(2013, 12, 31),
+                            Title = "A Tale For the Time Being"
+                        },
+                        new
+                        {
+                            BookId = 3,
+                            AuthorId = 3,
+                            BasePrice = 0m,
+                            PublishDate = new DateOnly(1969, 3, 1),
+                            Title = "The Left Hand of Darkness"
+                        });
                 });
 
             modelBuilder.Entity("PublisherDomain.Cover", b =>
@@ -145,26 +192,6 @@ namespace PublisherData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Covers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DesignIdeas = "How is?",
-                            DigitalOnly = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DesignIdeas = "How are?",
-                            DigitalOnly = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DesignIdeas = "How am?",
-                            DigitalOnly = true
-                        });
                 });
 
             modelBuilder.Entity("ArtistCover", b =>
