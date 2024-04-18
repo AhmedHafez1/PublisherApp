@@ -36,5 +36,5 @@ void GetBooksForAuthorAlreadyInMemory()
     var author = _context.Authors.FirstOrDefault(a => a.FirstName.StartsWith("R"));
 
     if (author != null)
-        _context.Entry<Author>(author).Collection(a => a.Books).Load();
+        _context.Entry(author).Collection(a => a.Books).Load();
 }
