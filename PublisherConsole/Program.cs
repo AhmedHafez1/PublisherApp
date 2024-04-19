@@ -4,12 +4,13 @@ using PublisherDomain;
 
 using PubContext _context = new(); // existing database
 
-var artist = new Artist { FirstName = "Abdelghany", LastName = "Hafez" };
+var cover = _context.Covers.Find(2);
+var book = new Book { AuthorId = 3, Title = "Angular 17", PublishDate = new DateOnly(2021, 6, 7), BasePrice = 7 };
+var author = new Author { FirstName = "Sarah", LastName = "Mohamed" };
+book.Cover = cover;
+book.Author = author;
 
-var cover = new Cover { DesignIdeas = "What is?" };
 
-artist.Covers.Add(cover);
-
-_context.Artists.Add(artist);
+_context.Books.Add(book);
 
 _context.SaveChanges();
